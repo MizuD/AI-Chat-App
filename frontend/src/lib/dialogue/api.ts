@@ -1,3 +1,4 @@
+import script from "@/data/dialogues.json";
 import type { Emotion } from "@/lib/character/types";
 
 export interface DialogueChoice {
@@ -25,34 +26,64 @@ export interface Category {
   topics: TopicSummary[];
 }
 
-const PLAYER_KEY = "kokoro.player";
-
-// Anonymous per-browser id so the backend can remember which topics were already talked about.
-export function playerId() {
-  try {
-    let id = localStorage.getItem(PLAYER_KEY);
-    if (!id) {
-      id = crypto.randomUUID();
-      localStorage.setItem(PLAYER_KEY, id);
-    }
-    return id;
-  } catch {
-    return "guest";
+// Same id scheme as backend/seed.py ("topic:node", "topic:node:index") so data can move to a server later.
+const nodes = new Map<string, DialogueNode>();
+const nextOf = new Map<string, string | null>();
+const startOf = new Map<string, string>();
+for (const topic of script.topics) {
+  startOf.set(topic.id, `${topic.id}:${topic.nodes[0].id}`);
+  for (const node of topic.nodes) {
+    const id = `${topic.id}:${node.id}`;
+    nodes.set(id, {
+      id,
+      topic_id: topic.id,
+      text: node.text,
+      emotion: node.emotion as Emotion,
+      choices: node.choices.map((c, i) => ({ id: `${id}:${i}`, label: c.label })),
+    });
+    node.choices.forEach((c, i) => nextOf.set(`${id}:${i}`, c.next ? `${topic.id}:${c.next}` : null));
   }
 }
 
-async function request<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(`/api${path}`, { ...init, headers: { "content-type": "application/json", ...init?.headers } });
-  if (!res.ok) throw new Error(`${res.status} ${path}`);
-  return res.json() as Promise<T>;
+const VISITED_KEY = "kokoro.visitedTopics";
+
+// Progress lives in this browser only; the static site has no server to remember it.
+function loadVisited(): Set<string> {
+  try {
+    return new Set(JSON.parse(localStorage.getItem(VISITED_KEY) ?? "[]") as string[]);
+  } catch {
+    return new Set();
+  }
+}
+
+function markVisited(topicId: string) {
+  const visited = loadVisited();
+  visited.add(topicId);
+  try {
+    localStorage.setItem(VISITED_KEY, JSON.stringify([...visited]));
+  } catch {
+    // Storage unavailable (private mode): progress just isn't remembered.
+  }
 }
 
 export const dialogueApi = {
-  categories: () => request<Category[]>(`/categories?player_id=${encodeURIComponent(playerId())}`),
-  startTopic: (topicId: string) => request<DialogueNode>(`/topics/${encodeURIComponent(topicId)}/start`),
-  choose: (choiceId: string) =>
-    request<{ next: DialogueNode | null }>(`/choices/${encodeURIComponent(choiceId)}`, {
-      method: "POST",
-      body: JSON.stringify({ player_id: playerId() }),
-    }),
+  categories(): Category[] {
+    const visited = loadVisited();
+    return script.categories.map((c) => ({
+      id: c.id,
+      label: c.label,
+      topics: script.topics
+        .filter((t) => t.category === c.id)
+        .map((t) => ({ id: t.id, title: t.title, visited: visited.has(t.id) })),
+    }));
+  },
+  startTopic(topicId: string): DialogueNode {
+    return nodes.get(startOf.get(topicId)!)!;
+  },
+  choose(choiceId: string): DialogueNode | null {
+    const [topicId] = choiceId.split(":");
+    markVisited(topicId);
+    const next = nextOf.get(choiceId);
+    return next ? nodes.get(next)! : null;
+  },
 };

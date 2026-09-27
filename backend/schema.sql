@@ -1,4 +1,4 @@
--- Dialogue content is rebuilt from data/dialogues.json by seed.py; choice_log survives reseeding.
+-- Dialogue content is rebuilt from frontend/src/data/dialogues.json by seed.py; choice_log survives reseeding.
 CREATE TABLE IF NOT EXISTS categories (
   id    TEXT PRIMARY KEY,
   label TEXT NOT NULL,

@@ -1,12 +1,10 @@
 import type { NextConfig } from "next";
 
-const backend = process.env.BACKEND_URL ?? "http://127.0.0.1:8000";
-
 const nextConfig: NextConfig = {
-  // The browser only talks to Next; FastAPI stays the single gateway to the database.
-  async rewrites() {
-    return [{ source: "/api/:path*", destination: `${backend}/api/:path*` }];
-  },
+  // Fully static site for GitHub Pages: no server at runtime.
+  output: "export",
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH || undefined,
+  images: { unoptimized: true },
 };
 
 export default nextConfig;

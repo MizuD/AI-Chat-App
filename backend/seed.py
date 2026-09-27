@@ -1,4 +1,4 @@
-"""Rebuild the dialogue tables from data/dialogues.json.
+"""Rebuild the dialogue tables from the dialogue script shared with the frontend.
 
 Usage: python seed.py
 """
@@ -7,11 +7,14 @@ import json
 
 from db import BASE_DIR, DB_PATH, connect
 
+# The static frontend bundles this same file; keep one script as the source of truth.
+SCRIPT_PATH = BASE_DIR.parent / "frontend" / "src" / "data" / "dialogues.json"
+
 EMOTIONS = {"neutral", "happy", "surprised", "sad", "thinking"}
 
 
 def main():
-    data = json.loads((BASE_DIR / "data" / "dialogues.json").read_text(encoding="utf-8"))
+    data = json.loads(SCRIPT_PATH.read_text(encoding="utf-8"))
     DB_PATH.parent.mkdir(parents=True, exist_ok=True)
     with connect() as conn:
         conn.executescript((BASE_DIR / "schema.sql").read_text(encoding="utf-8"))

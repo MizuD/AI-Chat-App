@@ -54,21 +54,22 @@ DATABASE_URL=postgresql://postgres:[YOUR-PASSWORD]@db.[PROJECT-REF].supabase.co:
 
 ## ローカルでの起動
 
-会話データは `backend/data/dialogues.json`（原稿）から SQLite（`backend/data/app.db`、git管理外）を作って使う。
+アプリはサーバー不要の静的サイト。会話の原稿は `frontend/src/data/dialogues.json` にあり、ブラウザ内で会話を進める（「話した」記録はブラウザの localStorage に保存）。
 
 ```bash
-# バックエンド（FastAPI）
-cd backend
-source .venv/bin/activate
-python seed.py                 # 原稿を編集したら再実行（選択履歴は残る）
-uvicorn main:app --port 8000
-
-# フロントエンド（別ターミナル）
 cd frontend
-npm run dev                    # /api/* は FastAPI(127.0.0.1:8000) に中継される
+npm run dev
 ```
 
 - キャラクターの3Dモデルは Blender で作成（元データ: `assets/blender/friend.blend`）し、`frontend/public/models/friend.glb` に書き出して使う
+- `backend/`（FastAPI + SQLite）は将来のAI会話・データ保存用。`python seed.py` で同じ原稿から SQLite を作れる（今のアプリからは使っていない）
+
+## 公開（GitHub Pages）
+
+`main` に push すると GitHub Actions（`.github/workflows/deploy-pages.yml`）が静的書き出しして GitHub Pages に公開する。
+
+- 公開URL: `https://<GitHubユーザー名>.github.io/AI-Chat-App/`
+- 初回のみ: リポジトリを Public にし、Settings → Pages → Source を「GitHub Actions」にする
 
 ## 開発フロー(日常運用)
 

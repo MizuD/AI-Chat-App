@@ -9,7 +9,7 @@ import type { Emotion } from "@/lib/character/types";
 import { useVoice } from "@/lib/chat/useVoice";
 import { dialogueApi, type Category, type DialogueChoice, type DialogueNode, type TopicSummary } from "@/lib/dialogue/api";
 
-type Mode = "menu" | "topics" | "talk" | "offline";
+type Mode = "menu" | "topics" | "talk";
 
 interface LogEntry {
   id: string;
@@ -19,8 +19,7 @@ interface LogEntry {
 
 type Option =
   | { kind: "category"; key: string; label: string; category: Category }
-  | { kind: "choice"; key: string; label: string; choice: DialogueChoice }
-  | { kind: "retry"; key: string; label: string };
+  | { kind: "choice"; key: string; label: string; choice: DialogueChoice };
 
 const pick = <T,>(items: T[]) => items[Math.floor(Math.random() * items.length)];
 
@@ -33,7 +32,6 @@ export function GameScreen() {
   const [topic, setTopic] = useState<{ category: string; title: string } | null>(null);
   const [line, setLine] = useState("");
   const [typing, setTyping] = useState(false);
-  const [busy, setBusy] = useState(false);
   const [choices, setChoices] = useState<DialogueChoice[]>([]);
   const [log, setLog] = useState<LogEntry[]>([]);
   const [showLog, setShowLog] = useState(false);
@@ -57,25 +55,15 @@ export function GameScreen() {
     [speak, addLog],
   );
 
-  const goOffline = useCallback(async () => {
-    setBusy(false);
-    setMode("offline");
-    await say(MENU_LINES.offline, "sad");
-  }, [say]);
-
   const openMenu = useCallback(
     async (text: string) => {
       setMode("menu");
       setTopic(null);
       setChoices([]);
-      try {
-        setCategories(await dialogueApi.categories());
-      } catch {
-        return goOffline();
-      }
+      setCategories(dialogueApi.categories());
       await say(text, "happy");
     },
-    [say, goOffline],
+    [say],
   );
 
   useEffect(() => {
@@ -100,47 +88,31 @@ export function GameScreen() {
     addLog("you", `「${item.title}」の話`);
     setMode("talk");
     setTopic({ category: category.label, title: item.title });
-    setBusy(true);
-    try {
-      const node = await dialogueApi.startTopic(item.id);
-      setBusy(false);
-      await showNode(node);
-    } catch {
-      void goOffline();
-    }
+    await showNode(dialogueApi.startTopic(item.id));
   };
 
   const pickChoice = async (choice: DialogueChoice) => {
     addLog("you", choice.label);
     setChoices([]);
-    setBusy(true);
-    try {
-      const { next } = await dialogueApi.choose(choice.id);
-      setBusy(false);
-      if (next) await showNode(next);
-      else await openMenu(pick(MENU_LINES.again));
-    } catch {
-      void goOffline();
-    }
+    const next = dialogueApi.choose(choice.id);
+    if (next) await showNode(next);
+    else await openMenu(pick(MENU_LINES.again));
   };
 
   const select = (option: Option) => {
     if (option.kind === "category") pickCategory(option.category);
-    else if (option.kind === "choice") void pickChoice(option.choice);
-    else void openMenu(MENU_LINES.greeting);
+    else void pickChoice(option.choice);
   };
   const selectRef = useRef(select);
 
-  const idle = ready && !typing && !busy;
+  const idle = ready && !typing;
   const options: Option[] = !idle
     ? []
     : mode === "menu"
       ? categories.map((c) => ({ kind: "category", key: c.id, label: `${c.label}の話をしよう`, category: c }))
       : mode === "talk"
         ? choices.map((c) => ({ kind: "choice", key: c.id, label: c.label, choice: c }))
-        : mode === "offline"
-          ? [{ kind: "retry", key: "retry", label: "もう一度つなぐ" }]
-          : [];
+        : [];
 
   useEffect(() => {
     optionsRef.current = options;
@@ -208,7 +180,7 @@ export function GameScreen() {
               ))}
             </div>
           )}
-          <DialogueBox line={line} typing={typing} busy={busy} accent={accent} onSkip={stop} />
+          <DialogueBox line={line} typing={typing} accent={accent} onSkip={stop} />
         </div>
 
         {showLog && <LogPanel log={log} onClose={() => setShowLog(false)} />}
@@ -275,7 +247,7 @@ function ChoiceButton({ index, accent, onClick, children }: { index: number; acc
   );
 }
 
-function DialogueBox({ line, typing, busy, accent, onSkip }: { line: string; typing: boolean; busy: boolean; accent: string; onSkip: () => void }) {
+function DialogueBox({ line, typing, accent, onSkip }: { line: string; typing: boolean; accent: string; onSkip: () => void }) {
   return (
     <div
       onClick={() => typing && onSkip()}
@@ -285,9 +257,9 @@ function DialogueBox({ line, typing, busy, accent, onSkip }: { line: string; typ
         {TETSUYA.name}
       </span>
       <p className="min-h-[3.8em] text-[16px] leading-[1.9] sm:text-[18px]">
-        {busy ? <span className="text-white/50">……</span> : line}
+        {line}
       </p>
-      {!typing && !busy && line && <span className="absolute bottom-3 right-5 animate-bounce text-xs text-white/50">▼</span>}
+      {!typing && line && <span className="absolute bottom-3 right-5 animate-bounce text-xs text-white/50">▼</span>}
       {typing && <span className="absolute bottom-3 right-5 text-[11px] text-white/35">クリック / Space でスキップ</span>}
     </div>
   );
