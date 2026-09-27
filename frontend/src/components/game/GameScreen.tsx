@@ -6,6 +6,8 @@ import { StageBackdrop } from "@/components/avatar/StageBackdrop";
 import { TalkingModel } from "@/components/avatar/TalkingModel";
 import { MENU_LINES, TETSUYA } from "@/lib/character/tetsuya";
 import type { Emotion } from "@/lib/character/types";
+import { setSoundOn, useSoundOn } from "@/lib/chat/soundSetting";
+import { cancelTts, ttsSupported, unlockTts } from "@/lib/chat/tts";
 import { useVoice } from "@/lib/chat/useVoice";
 import { dialogueApi, type Category, type DialogueChoice, type DialogueNode, type TopicSummary } from "@/lib/dialogue/api";
 
@@ -26,6 +28,8 @@ const pick = <T,>(items: T[]) => items[Math.floor(Math.random() * items.length)]
 export function GameScreen() {
   const { signal, speak, stop } = useVoice();
   const [ready, setReady] = useState(false);
+  const [entered, setEntered] = useState(false);
+  const soundOn = useSoundOn();
   const [categories, setCategories] = useState<Category[]>([]);
   const [mode, setMode] = useState<Mode>("menu");
   const [categoryId, setCategoryId] = useState<string | null>(null);
@@ -48,11 +52,13 @@ export function GameScreen() {
       const token = ++turn.current;
       setTyping(true);
       addLog("tetsuya", text);
-      await speak(text, { cps: TETSUYA.talkSpeed, emotion, onProgress: setLine });
+      const audio = soundOn && ttsSupported();
+      // Slow the typewriter to roughly the speaking rate so text and voice finish together.
+      await speak(text, { cps: audio ? 9 : TETSUYA.talkSpeed, emotion, audio, onProgress: setLine });
       if (token === turn.current) setTyping(false);
       return token === turn.current;
     },
-    [speak, addLog],
+    [speak, addLog, soundOn],
   );
 
   const openMenu = useCallback(
@@ -67,10 +73,10 @@ export function GameScreen() {
   );
 
   useEffect(() => {
-    if (!ready || started.current) return;
+    if (!ready || !entered || started.current) return;
     started.current = true;
     void openMenu(MENU_LINES.greeting);
-  }, [ready, openMenu]);
+  }, [ready, entered, openMenu]);
 
   const showNode = async (node: DialogueNode) => {
     setChoices([]);
@@ -105,7 +111,7 @@ export function GameScreen() {
   };
   const selectRef = useRef(select);
 
-  const idle = ready && !typing;
+  const idle = ready && entered && !typing;
   const options: Option[] = !idle
     ? []
     : mode === "menu"
@@ -158,7 +164,16 @@ export function GameScreen() {
           </div>
         )}
 
-        <Hud topic={topic} onLog={() => setShowLog(true)} onChangeTopic={mode === "talk" ? () => void openMenu(MENU_LINES.pickTopic) : undefined} />
+        <Hud
+          topic={topic}
+          soundOn={soundOn}
+          onSound={() => {
+            if (soundOn) cancelTts();
+            setSoundOn(!soundOn);
+          }}
+          onLog={() => setShowLog(true)}
+          onChangeTopic={mode === "talk" ? () => void openMenu(MENU_LINES.pickTopic) : undefined}
+        />
 
         <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-3 p-3 sm:p-6">
           {idle && mode === "topics" && activeCategory && (
@@ -184,6 +199,19 @@ export function GameScreen() {
         </div>
 
         {showLog && <LogPanel log={log} onClose={() => setShowLog(false)} />}
+
+        {ready && !entered && (
+          <TitleScreen
+            accent={accent}
+            soundOn={soundOn}
+            onSound={() => setSoundOn(!soundOn)}
+            onStart={() => {
+              // Must run inside the tap so mobile browsers allow the voice afterwards.
+              if (soundOn) unlockTts();
+              setEntered(true);
+            }}
+          />
+        )}
       </main>
     </div>
   );
@@ -191,10 +219,14 @@ export function GameScreen() {
 
 function Hud({
   topic,
+  soundOn,
+  onSound,
   onLog,
   onChangeTopic,
 }: {
   topic: { category: string; title: string } | null;
+  soundOn: boolean;
+  onSound: () => void;
   onLog: () => void;
   onChangeTopic?: () => void;
 }) {
@@ -204,7 +236,7 @@ function Hud({
         <CharacterThumb character={TETSUYA} className="h-11 w-11 ring-2 ring-white/20" />
         <div>
           <p className="text-[15px] font-bold leading-tight">{TETSUYA.name}</p>
-          <p className="text-xs text-white/60">{TETSUYA.role}</p>
+          <p className="whitespace-nowrap text-xs text-white/60">{TETSUYA.role}</p>
         </div>
         {topic && (
           <span className="ml-1 hidden animate-rise-in rounded-full border border-white/15 bg-black/40 px-3 py-1 text-xs text-white/80 backdrop-blur-md sm:inline">
@@ -212,17 +244,25 @@ function Hud({
           </span>
         )}
       </div>
-      <div className="flex gap-2">
-        {onChangeTopic && <HudButton onClick={onChangeTopic}>話題を変える</HudButton>}
+      <div className="flex shrink-0 gap-2">
+        {onChangeTopic && (
+          <HudButton onClick={onChangeTopic} label="話題を変える">
+            <span className="sm:hidden">話題</span>
+            <span className="hidden sm:inline">話題を変える</span>
+          </HudButton>
+        )}
+        <HudButton onClick={onSound} label={soundOn ? "音声をオフにする" : "音声をオンにする"}>
+          <SpeakerIcon on={soundOn} />
+        </HudButton>
         <HudButton onClick={onLog}>ログ</HudButton>
       </div>
     </div>
   );
 }
 
-function HudButton({ onClick, children }: { onClick: () => void; children: ReactNode }) {
+function HudButton({ onClick, label, children }: { onClick: () => void; label?: string; children: ReactNode }) {
   return (
-    <button onClick={onClick} className="rounded-full border border-white/15 bg-black/40 px-3.5 py-1.5 text-xs backdrop-blur-md transition hover:bg-black/60">
+    <button onClick={onClick} aria-label={label} title={label} className="flex items-center whitespace-nowrap rounded-full border border-white/15 bg-black/40 px-3.5 py-1.5 text-xs backdrop-blur-md transition hover:bg-black/60">
       {children}
     </button>
   );
@@ -348,6 +388,41 @@ function LogPanel({ log, onClose }: { log: LogEntry[]; onClose: () => void }) {
           <div ref={end} />
         </div>
       </aside>
+    </div>
+  );
+}
+
+function SpeakerIcon({ on }: { on: boolean }) {
+  return (
+    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M11 5 6 9H3v6h3l5 4V5Z" fill="currentColor" />
+      {on ? <path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13" /> : <path d="m16 9 5 6M21 9l-5 6" />}
+    </svg>
+  );
+}
+
+function TitleScreen({ accent, soundOn, onSound, onStart }: { accent: string; soundOn: boolean; onSound: () => void; onStart: () => void }) {
+  return (
+    <div className="absolute inset-0 z-30 grid place-items-center bg-black/55 p-6 backdrop-blur-md">
+      <div className="flex animate-rise-in flex-col items-center text-center">
+        <CharacterThumb character={TETSUYA} className="h-28 w-28 shadow-2xl ring-4 ring-white/15" />
+        <p className="mt-6 text-[11px] font-semibold tracking-[0.35em] text-white/55">RUNNING BUDDY</p>
+        <h1 className="mt-2 text-4xl font-bold">{TETSUYA.name}と話そう</h1>
+        <p className="mt-3 text-sm text-white/65">ランニングのこと、日常のこと、恋バナまで。</p>
+        <button
+          onClick={onStart}
+          className="mt-9 rounded-full px-10 py-4 text-lg font-bold shadow-[0_14px_40px_-10px_rgba(255,122,69,0.9)] transition hover:scale-[1.04]"
+          style={{ background: accent }}
+        >
+          タップしてはじめる
+        </button>
+        {ttsSupported() && (
+          <button onClick={onSound} className="mt-5 flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm text-white/75 hover:bg-white/10">
+            <SpeakerIcon on={soundOn} />
+            音声 {soundOn ? "オン" : "オフ"}
+          </button>
+        )}
+      </div>
     </div>
   );
 }
