@@ -1,0 +1,539 @@
+{
+  "categories": [
+    { "id": "running", "label": "ランニング" },
+    { "id": "daily", "label": "日常" },
+    { "id": "love", "label": "恋愛" }
+  ],
+  "topics": [
+    {
+      "id": "run-start", "category": "running", "title": "走り始めたい",
+      "nodes": [
+        { "id": "start", "emotion": "happy", "text": "おう、走り始めたいんか！ええやんええやん！で、最初はどれくらい走るつもりなん？", "choices": [
+          { "label": "いきなり5kmいけるかな", "next": "big" },
+          { "label": "まずは少しだけ", "next": "small" },
+          { "label": "正直なにから始めればいいか…", "next": "howto" }
+        ] },
+        { "id": "big", "emotion": "surprised", "text": "アホ、いきなり5kmはあかんで！心肺より先に、脚の骨とか腱がついてこれへんねん。最初の2週間は『1分走って2分歩く』を8セット。これが一番の近道や。", "choices": [{ "label": "なんで歩きを入れるの？", "next": "big2" }] },
+        { "id": "big2", "emotion": "thinking", "text": "骨や腱は筋肉より鍛わるのが遅いんや。歩きを挟むと着地の衝撃が減って、ケガせんと体を慣らせる。てつやも最初これで3ヶ月続いたんやで。", "choices": [{ "label": "走歩でやってみる", "next": null }] },
+        { "id": "small", "emotion": "happy", "text": "それが正解や！週3回、20〜30分を2週間続けたら、体がちゃんと『走る体』に変わり始める。距離は後から勝手についてくるで。", "choices": [{ "label": "週3回から始める！", "next": null }] },
+        { "id": "howto", "emotion": "neutral", "text": "まずは今あるスニーカーとジャージでええ。家の周り一周して帰ってくる、それだけで今日は合格や。道具は続いてから揃えたらええねん。", "choices": [{ "label": "ハードル下がった！", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-motivation", "category": "running", "title": "やる気が出ない",
+      "nodes": [
+        { "id": "start", "emotion": "thinking", "text": "やる気出ぇへん日なぁ…誰にでもあるで。今日はどんな感じや？", "choices": [
+          { "label": "とにかく体が重い", "next": "heavy" },
+          { "label": "走る意味がわからなくなった", "next": "meaning" },
+          { "label": "外に出るのがめんどう", "next": "lazy" }
+        ] },
+        { "id": "heavy", "emotion": "neutral", "text": "体が重いんは疲労が抜けてへんサインかもしれん。朝の安静時心拍がいつもより5以上高かったら、今日は休みや。休むんも立派なトレーニングやで。", "choices": [{ "label": "心拍、測ってみる", "next": null }] },
+        { "id": "meaning", "emotion": "thinking", "text": "わかるで。そういう時は『走り終わった後の自分』を思い出すんや。てつやなんか、走った後のシャワーのために走っとるようなもんやで。", "choices": [{ "label": "走った後の自分、好きかも", "next": "meaning2" }] },
+        { "id": "meaning2", "emotion": "happy", "text": "せやろ？理由なんて小さくてええねん。その気持ち、忘れんときや。", "choices": [{ "label": "おおきに、てつや", "next": null }] },
+        { "id": "lazy", "emotion": "happy", "text": "ほな『ウェアに着替えるだけ』って決めよか。人間、着替えたら9割は外に出れるもんや。出たら5分だけでもええ。", "choices": [{ "label": "着替えるだけならできる", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-goal", "category": "running", "title": "目標を決めたい",
+      "nodes": [
+        { "id": "start", "emotion": "happy", "text": "目標決めよか！ワクワクするなぁ。どんなんがええ？", "choices": [
+          { "label": "大会に出たい", "next": "race" },
+          { "label": "体重を落としたい", "next": "weight" },
+          { "label": "習慣にしたい", "next": "habit" }
+        ] },
+        { "id": "race", "emotion": "surprised", "text": "ええやん！ほな12週間後の10kmレースを本番にしよ。最初の4週で土台作り、次の4週でスピード、最後の4週で仕上げ。逆算したら週3回で十分間に合うで。", "choices": [{ "label": "12週間計画、やる！", "next": null }] },
+        { "id": "weight", "emotion": "neutral", "text": "それなら体重より『月間走行距離』を追いかけるんや。まず月50km。体重は日によって1〜2kgブレるから、週の平均で見なあかんで。", "choices": [{ "label": "月50km目指す", "next": null }] },
+        { "id": "habit", "emotion": "happy", "text": "習慣化のコツは『時間と場所』を固定することや。『火・木は仕事帰り、日曜は朝』みたいにな。考えんでええ仕組みにしたら勝ちやで。", "choices": [{ "label": "曜日と時間を決める", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-rain", "category": "running", "title": "雨の日どうする？",
+      "nodes": [
+        { "id": "start", "emotion": "sad", "text": "うわ、今日雨やんけ…。どないする？", "choices": [
+          { "label": "雨でも走る！", "next": "go" },
+          { "label": "家でできることある？", "next": "home" }
+        ] },
+        { "id": "go", "emotion": "surprised", "text": "根性あるなぁ！つば付きキャップで視界確保や。濡れたマンホールと白線は滑るから要注意やで。帰ったらすぐシャワーで体冷やさんようにな。", "choices": [{ "label": "気をつけて行ってくる", "next": null }] },
+        { "id": "home", "emotion": "happy", "text": "雨の日は補強デーや！スクワット、ヒップリフト、プランクを各3セット。お尻と体幹が強なったら、フォームがブレへんようになるで。", "choices": [{ "label": "補強やってみる", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-tired", "category": "running", "title": "脚が痛い・疲れが取れない",
+      "nodes": [
+        { "id": "start", "emotion": "sad", "text": "大丈夫か？どのへんがしんどいんや？", "choices": [
+          { "label": "すねの内側が痛い", "next": "shin" },
+          { "label": "ひざの外側が痛い", "next": "knee" },
+          { "label": "全身だるい", "next": "tired" }
+        ] },
+        { "id": "shin", "emotion": "thinking", "text": "それシンスプリントかもしれんで。距離を急に増やしたり、硬い道ばっか走るとなりやすいんや。痛みが引くまで走るのは休んで、続くなら整形外科や。", "choices": [{ "label": "しばらく休む", "next": null }] },
+        { "id": "knee", "emotion": "thinking", "text": "ひざの外側は『ランナー膝』の可能性があるな。お尻の筋肉が弱いと膝が内に入って起きやすいんや。痛い間は走らんと、治ったらお尻の補強や。痛みが続くなら病院行きや。", "choices": [{ "label": "お尻を鍛える", "next": null }] },
+        { "id": "tired", "emotion": "neutral", "text": "睡眠と水分、足りとるか？回復の主役は睡眠や、7時間は寝なあかん。疲れとる日はゆっくり歩くだけでも血流よくなって回復早なるで。", "choices": [{ "label": "今日は早く寝る", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-pace", "category": "running", "title": "ペースがわからない",
+      "nodes": [
+        { "id": "start", "emotion": "thinking", "text": "ペースの目安な。どこが気になっとるん？", "choices": [
+          { "label": "どれくらいが正解？", "next": "talk" },
+          { "label": "すぐ息が上がっちゃう", "next": "breath" }
+        ] },
+        { "id": "talk", "emotion": "happy", "text": "普段の練習の8割は『会話しながら走れる』ペースでええねん。ゆっくりすぎて恥ずかしいくらいが、持久力は一番伸びるんやで。", "choices": [{ "label": "8割ゆっくりなんだ", "next": null }] },
+        { "id": "breath", "emotion": "neutral", "text": "それはペース速すぎのサインや。歩いてもええから息が整うスピードまで落とし。2歩で吸って2歩で吐く、このリズムが保てたらちょうどええで。", "choices": [{ "label": "呼吸で調整する", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-time", "category": "running", "title": "朝ランと夜ラン",
+      "nodes": [
+        { "id": "start", "emotion": "neutral", "text": "朝と夜、どっちが走りやすいん？", "choices": [
+          { "label": "朝に走りたい", "next": "morning" },
+          { "label": "夜しか時間がない", "next": "night" }
+        ] },
+        { "id": "morning", "emotion": "happy", "text": "朝ランはええで！ただ起きてすぐは体が硬いし、水分も抜けとる。コップ1杯の水飲んで、最初の10分はジョグでゆっくり体起こすんや。", "choices": [{ "label": "明日の朝やってみる", "next": null }] },
+        { "id": "night", "emotion": "neutral", "text": "夜ランもストレス発散になってええな。ただ寝る直前の激しい練習は寝付き悪なるから、寝る2時間前には終わらせや。反射材とライトは絶対やで。", "choices": [{ "label": "安全第一で走る", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-shoes", "category": "running", "title": "シューズ選び",
+      "nodes": [
+        { "id": "start", "emotion": "happy", "text": "シューズ選びは楽しいなぁ！何で迷っとるん？", "choices": [
+          { "label": "初心者向けはどれ？", "next": "beginner" },
+          { "label": "厚底ってどうなの？", "next": "carbon" },
+          { "label": "買い替え時期は？", "next": "replace" }
+        ] },
+        { "id": "beginner", "emotion": "neutral", "text": "最初はクッション厚めで安定感あるやつや。試し履きは足がむくむ夕方に、つま先に指1本分の余裕があるか確認しや。", "choices": [{ "label": "夕方に試し履きする", "next": null }] },
+        { "id": "carbon", "emotion": "thinking", "text": "カーボン入りの厚底はレース用の武器や。速いけど、脚が慣れてへんとふくらはぎやアキレス腱にくる。普段の練習は普通のシューズでやるんがええで。", "choices": [{ "label": "レース用にとっておく", "next": null }] },
+        { "id": "replace", "emotion": "neutral", "text": "目安は500〜800kmや。ソールがすり減ったり、クッションが潰れて膝に響く感じがしたら替え時やで。", "choices": [{ "label": "走行距離メモしとく", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-race", "category": "running", "title": "大会に出てみたい",
+      "nodes": [
+        { "id": "start", "emotion": "surprised", "text": "大会！？ええやん、一緒に出よや！どのくらいの距離がええ？", "choices": [
+          { "label": "5kmから", "next": "five" },
+          { "label": "いつかフルマラソン", "next": "full" }
+        ] },
+        { "id": "five", "emotion": "happy", "text": "5kmは最初の大会にぴったりや。当日はスタート直後に飛ばしすぎんこと。最初の1kmは『ちょっと遅いかな』くらいで入るんがコツやで。", "choices": [{ "label": "エントリーしてみる！", "next": null }] },
+        { "id": "full", "emotion": "happy", "text": "でっかい夢やな！順番は5km→10km→ハーフ→フルや。ハーフを完走できたら、そこから4〜6ヶ月でフル挑戦。てつやも練習付き合うで！", "choices": [{ "label": "一緒にがんばろう", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-record", "category": "running", "title": "記録が伸びない",
+      "nodes": [
+        { "id": "start", "emotion": "thinking", "text": "記録が止まる時期、誰にでもあるで。最近どんな練習しとるん？", "choices": [
+          { "label": "毎回同じコースを同じペース", "next": "same" },
+          { "label": "毎日ガンガン走ってる", "next": "much" }
+        ] },
+        { "id": "same", "emotion": "neutral", "text": "それや！同じ刺激やと体は慣れてまうねん。週1でインターバルかテンポ走を入れて、残りはゆっくり。この『メリハリ』が伸びる秘訣や。", "choices": [{ "label": "メリハリつけてみる", "next": null }] },
+        { "id": "much", "emotion": "surprised", "text": "やりすぎや！体は走っとる間やなくて、休んどる間に強なるんや。週2日は完全休養か、軽いジョグだけにしてみ。", "choices": [{ "label": "休むのも練習なんだね", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-streak", "category": "running", "title": "三日坊主になる",
+      "nodes": [
+        { "id": "start", "emotion": "sad", "text": "三日坊主かぁ。けど自分、三日も続いたってことやで？", "choices": [
+          { "label": "たしかに…", "next": "yes" },
+          { "label": "どうしたら続く？", "next": "how" }
+        ] },
+        { "id": "yes", "emotion": "happy", "text": "せや！また三日やったらええねん。三日坊主を10回やったら一ヶ月や。途切れても、また始めたもん勝ちやで。", "choices": [{ "label": "その考え方、好き", "next": null }] },
+        { "id": "how", "emotion": "thinking", "text": "コツは『最低ライン』を決めることや。調子悪い日は5分だけでもOKにする。ゼロの日を作らへんのが、習慣にする一番の近道やで。", "choices": [{ "label": "最低5分ルールにする", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-food", "category": "running", "title": "走る前後のごはん",
+      "nodes": [
+        { "id": "start", "emotion": "neutral", "text": "ごはんのタイミング、大事やで。どっちが気になる？", "choices": [
+          { "label": "走る前は何を食べる？", "next": "before" },
+          { "label": "走った後は？", "next": "after" }
+        ] },
+        { "id": "before", "emotion": "neutral", "text": "走る1〜2時間前にバナナかおにぎり1個や。消化に時間かかる脂っこいもんは避け。空腹すぎてもフラフラなるから、少しは入れときや。", "choices": [{ "label": "バナナ常備する", "next": null }] },
+        { "id": "after", "emotion": "happy", "text": "走った後30分以内に、糖質とたんぱく質をセットで入れるんや。おにぎりと牛乳、ヨーグルトにバナナとかな。回復のスピードが全然ちゃうで。", "choices": [{ "label": "セットで食べる", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-report", "category": "running", "title": "今日走ったよ！",
+      "nodes": [
+        { "id": "start", "emotion": "surprised", "text": "ほんまに走ったんか！？えらすぎるやろ！どうやった？", "choices": [
+          { "label": "気持ちよかった！", "next": "good" },
+          { "label": "きつかったけど走りきった", "next": "hard" },
+          { "label": "途中で歩いちゃった", "next": "walk" }
+        ] },
+        { "id": "good", "emotion": "happy", "text": "最高やんけ！その『気持ちええ』って感覚が一番の才能やで。今日の距離とペース、メモしときや。後で見返したら成長がわかるからな。", "choices": [{ "label": "記録つける！", "next": null }] },
+        { "id": "hard", "emotion": "happy", "text": "きつくても走りきったんはほんまにすごいで。ただ毎回きついんやったらペース速すぎかもしれん。次はもうちょい落としてみ。", "choices": [{ "label": "次はゆっくり走る", "next": null }] },
+        { "id": "walk", "emotion": "neutral", "text": "全然かまへん！走歩を混ぜるんは立派な練習法や。外に出て体動かした時点で、今日は大成功やで。", "choices": [{ "label": "そう思ったら楽になった", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-heart", "category": "running", "title": "心拍トレーニング",
+      "nodes": [
+        { "id": "start", "emotion": "thinking", "text": "心拍トレーニングか、ええとこに目ぇつけたな！何が知りたいん？", "choices": [
+          { "label": "ゾーン2って何？", "next": "zone2" },
+          { "label": "最大心拍ってどう出す？", "next": "max" }
+        ] },
+        { "id": "zone2", "emotion": "neutral", "text": "ゾーン2は最大心拍の60〜70%くらい、会話しながら走れる強さや。脂肪を燃やして持久力の土台を作る、一番コスパええ練習やで。", "choices": [{ "label": "遅すぎて不安なんだけど", "next": "zone2b" }] },
+        { "id": "zone2b", "emotion": "happy", "text": "みんな最初はそう言うねん！でも2〜3ヶ月続けたら、同じ心拍でもペースが上がってくる。それが持久力ついた証拠や。信じて続けや！", "choices": [{ "label": "信じて続ける", "next": null }] },
+        { "id": "max", "emotion": "thinking", "text": "ざっくりは『220−年齢』や。ただ個人差が大きいから、あくまで目安な。ウォッチでしばらく記録して、自分の数字を知るんが一番正確やで。", "choices": [{ "label": "ウォッチで記録してみる", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-interval", "category": "running", "title": "インターバル走",
+      "nodes": [
+        { "id": "start", "emotion": "happy", "text": "スピード練習いこか！インターバルはキツいけど、効果は抜群やで。", "choices": [
+          { "label": "どうやるの？", "next": "how" },
+          { "label": "頻度はどれくらい？", "next": "freq" }
+        ] },
+        { "id": "how", "emotion": "neutral", "text": "定番は『400mを5kmのレースペースで走って、200mジョグでつなぐ』を6〜8本や。最初は4本からでええ。前後に10分ずつのジョグも忘れんときや。", "choices": [{ "label": "4本から挑戦する", "next": "how2" }] },
+        { "id": "how2", "emotion": "happy", "text": "最後の1本まで同じペースで走れたら合格や。最初に飛ばして後半バテるんは、設定が速すぎる証拠やで。", "choices": [{ "label": "全部同じペースを目指す", "next": null }] },
+        { "id": "freq", "emotion": "thinking", "text": "週1回で十分や。キツい練習は週2回まで、それ以外はゆっくり走る。これが『80/20』っていう考え方で、トップ選手もやっとるんやで。", "choices": [{ "label": "週1で入れてみる", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-long", "category": "running", "title": "ロング走（LSD）",
+      "nodes": [
+        { "id": "start", "emotion": "neutral", "text": "LSDは『ロング・スロー・ディスタンス』、ゆっくり長く走る練習や。何が気になる？", "choices": [
+          { "label": "どれくらいのペース？", "next": "pace" },
+          { "label": "どれくらいの距離？", "next": "dist" }
+        ] },
+        { "id": "pace", "emotion": "happy", "text": "普段のジョグより、1kmあたり30秒〜1分遅いくらいでええ。速さやなくて『時間』が大事なんや。毛細血管が増えて、スタミナの土台ができるで。", "choices": [{ "label": "ゆっくり長くだね", "next": null }] },
+        { "id": "dist", "emotion": "thinking", "text": "まずは60〜90分を目標にしよか。フル狙うなら最終的に2時間半くらいまで伸ばす。週の走行距離の3割を超えへんようにするんがコツや。", "choices": [{ "label": "まずは60分から", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-form", "category": "running", "title": "フォームを良くしたい",
+      "nodes": [
+        { "id": "start", "emotion": "thinking", "text": "フォームか。どこを直したいん？", "choices": [
+          { "label": "着地がわからない", "next": "landing" },
+          { "label": "ピッチとストライドって？", "next": "cadence" },
+          { "label": "腕振りのコツは？", "next": "arms" }
+        ] },
+        { "id": "landing", "emotion": "neutral", "text": "大事なんは『体の真下あたりで着地する』ことや。足を前に投げ出してかかとからドンっと着くと、ブレーキかかって膝にくる。少し前傾して、重心の下に足を置く感じや。", "choices": [{ "label": "真下に着地を意識する", "next": null }] },
+        { "id": "cadence", "emotion": "thinking", "text": "ピッチは1分間の歩数、ストライドは1歩の幅や。初心者は歩幅が広すぎることが多いねん。今より5%だけピッチ上げてみ。着地が体の近くになって、脚への負担が減るで。", "choices": [{ "label": "ピッチを5%上げる", "next": null }] },
+        { "id": "arms", "emotion": "happy", "text": "肘を90度くらいに曲げて、後ろに引くんを意識や。前に振ろうとせんでええ。肩の力抜いて、手は軽く卵を握るくらいやで。", "choices": [{ "label": "後ろに引く意識する", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-warmup", "category": "running", "title": "ウォームアップとストレッチ",
+      "nodes": [
+        { "id": "start", "emotion": "neutral", "text": "準備運動、ちゃんとしとるか？", "choices": [
+          { "label": "走る前は何をする？", "next": "before" },
+          { "label": "走った後は？", "next": "after" }
+        ] },
+        { "id": "before", "emotion": "neutral", "text": "走る前は、じっと伸ばす静的ストレッチより、動きながらほぐす動的ストレッチや。レッグスイング、もも上げ、肩回し。それから最初の5〜10分はゆっくりジョグやで。", "choices": [{ "label": "動的ストレッチやる", "next": null }] },
+        { "id": "after", "emotion": "happy", "text": "走った後は5分歩いてクールダウンしてから、ふくらはぎ・もも裏・お尻を30秒ずつじっくり伸ばすんや。次の日の脚の軽さが全然ちゃうで。", "choices": [{ "label": "30秒ずつ伸ばす", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-strength", "category": "running", "title": "補強トレーニング",
+      "nodes": [
+        { "id": "start", "emotion": "happy", "text": "走るだけやなくて筋トレも大事やで。何から聞きたい？", "choices": [
+          { "label": "おすすめのメニューは？", "next": "menu" },
+          { "label": "筋トレすると重くならない？", "next": "heavy" }
+        ] },
+        { "id": "menu", "emotion": "neutral", "text": "ランナーの三種の神器は、スクワット、ヒップリフト、片脚立ちや。お尻と体幹が安定したら、着地のブレが減ってケガしにくなる。週2回、10分でええで。", "choices": [{ "label": "週2回やってみる", "next": null }] },
+        { "id": "heavy", "emotion": "thinking", "text": "心配いらん！自重トレくらいでムキムキにはならへん。むしろ脚のバネが強なって、同じ力で速く走れるようになるんや。", "choices": [{ "label": "安心した", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-mileage", "category": "running", "title": "走る距離の増やし方",
+      "nodes": [
+        { "id": "start", "emotion": "thinking", "text": "距離を伸ばしたいんか。せやけど増やし方にはルールがあるんやで。", "choices": [
+          { "label": "どんなルール？", "next": "rule" },
+          { "label": "調子いいから一気に増やしたい", "next": "rush" }
+        ] },
+        { "id": "rule", "emotion": "neutral", "text": "『週の走行距離は前の週から10%まで』ってのが目安や。あと3〜4週に1回は距離を落とす回復週を入れる。これでケガのリスクがぐっと下がるで。", "choices": [{ "label": "10%ルール守る", "next": null }] },
+        { "id": "rush", "emotion": "surprised", "text": "それが一番危ないねん！心肺は数週間で強なるけど、骨や腱は数ヶ月かかる。調子ええ時ほどケガしやすいんや。ぐっと我慢しいや。", "choices": [{ "label": "我慢する…！", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-hill", "category": "running", "title": "坂道トレーニング",
+      "nodes": [
+        { "id": "start", "emotion": "happy", "text": "坂道はタダでできる最強の筋トレやで！上りと下り、どっちの話する？", "choices": [
+          { "label": "上りのコツ", "next": "up" },
+          { "label": "下りのコツ", "next": "down" }
+        ] },
+        { "id": "up", "emotion": "neutral", "text": "上りは歩幅を小さくして、ピッチで登るんや。目線は少し先、腕振りをしっかり。短い坂を10秒ダッシュ×6本の坂ダッシュも、脚力つくで。", "choices": [{ "label": "坂ダッシュやってみる", "next": null }] },
+        { "id": "down", "emotion": "thinking", "text": "下りは実は脚へのダメージが大きいねん。後ろにのけぞらんと、少し前傾のまま小刻みに。ブレーキかけすぎると、ももの前がパンパンになるで。", "choices": [{ "label": "小刻みに下る", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-breathing", "category": "running", "title": "呼吸が苦しい",
+      "nodes": [
+        { "id": "start", "emotion": "thinking", "text": "呼吸な。苦しなるんはどんな時や？", "choices": [
+          { "label": "走り始めてすぐ", "next": "early" },
+          { "label": "脇腹が痛くなる", "next": "side" }
+        ] },
+        { "id": "early", "emotion": "neutral", "text": "走り始めは体がまだ酸素を使う準備できてへんのや。最初の5分をウォームアップにして、じわっとペース上げたら楽になるで。", "choices": [{ "label": "最初はゆっくり入る", "next": null }] },
+        { "id": "side", "emotion": "neutral", "text": "脇腹痛は、食後すぐ走ったり浅い呼吸が原因のことが多いんや。痛なったらペース落として、お腹から深く吐き切ってみ。食事は走る1〜2時間前までにな。", "choices": [{ "label": "深く吐くのを意識する", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-recovery", "category": "running", "title": "休養とオーバートレーニング",
+      "nodes": [
+        { "id": "start", "emotion": "thinking", "text": "休み方、ちゃんと考えとるか？走りすぎも怖いんやで。", "choices": [
+          { "label": "走りすぎのサインは？", "next": "signs" },
+          { "label": "休みの日は何をすればいい？", "next": "rest" }
+        ] },
+        { "id": "signs", "emotion": "sad", "text": "朝の心拍がいつもより高い、寝ても疲れが抜けへん、イライラする、記録が落ちる。このへんが重なったら要注意や。1週間思い切って量を半分にしてみ。", "choices": [{ "label": "サイン、チェックする", "next": null }] },
+        { "id": "rest", "emotion": "happy", "text": "完全に休むか、散歩や軽いストレッチくらいの『積極的休養』やな。ほんで、よう食べてよう寝る。回復までが練習やで！", "choices": [{ "label": "よく食べてよく寝る", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-weather", "category": "running", "title": "夏ラン・冬ラン",
+      "nodes": [
+        { "id": "start", "emotion": "neutral", "text": "季節によって走り方は変えなあかんで。どっちの話や？", "choices": [
+          { "label": "夏の暑い日", "next": "summer" },
+          { "label": "冬の寒い日", "next": "winter" }
+        ] },
+        { "id": "summer", "emotion": "sad", "text": "夏はペースを1kmあたり15〜30秒落とすんが正解や。体が暑さに慣れるには1〜2週間かかる。汗かく量が多い日は、水だけやなくて塩分もとらなあかんで。", "choices": [{ "label": "塩分も忘れない", "next": null }] },
+        { "id": "winter", "emotion": "happy", "text": "冬は重ね着が基本や。走り出して『ちょっと寒いな』くらいがちょうどええ。帽子と手袋で末端を守るんやで。てつやのニット帽、伊達やないで！", "choices": [{ "label": "帽子と手袋で走る", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-watch", "category": "running", "title": "ランニングウォッチの見方",
+      "nodes": [
+        { "id": "start", "emotion": "thinking", "text": "ウォッチの数字、いろいろあってややこしいやろ？何を見たらええか教えたるわ。", "choices": [
+          { "label": "まず何を見ればいい？", "next": "basic" },
+          { "label": "データに振り回されそう", "next": "mind" }
+        ] },
+        { "id": "basic", "emotion": "neutral", "text": "見るんは3つだけでええ。ペース、心拍、ピッチや。ゆっくり走る日は心拍、スピード練習の日はペースを基準にするんやで。", "choices": [{ "label": "3つだけ見る", "next": null }] },
+        { "id": "mind", "emotion": "happy", "text": "ええとこに気づいたな。数字は調子を知る道具で、ご主人様はあくまで自分の体感や。キツいと感じたら、数字より体を信じるんやで。", "choices": [{ "label": "体の感覚を大事にする", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-raceday", "category": "running", "title": "レース当日の作戦",
+      "nodes": [
+        { "id": "start", "emotion": "surprised", "text": "いよいよ本番か！作戦会議しよか。", "choices": [
+          { "label": "ペース配分は？", "next": "pace" },
+          { "label": "直前の準備は？", "next": "prep" },
+          { "label": "緊張して眠れなさそう", "next": "nerve" }
+        ] },
+        { "id": "pace", "emotion": "thinking", "text": "理想は『ネガティブスプリット』、前半より後半を速く走るんや。スタートは周りにつられて速なるから、最初の1〜2kmは目標より少し遅めで入るんやで。", "choices": [{ "label": "前半は抑える", "next": null }] },
+        { "id": "prep", "emotion": "neutral", "text": "スタート3時間前までに朝ごはん、1時間前にトイレ、30分前から軽くジョグで体温めや。当日に新しいシューズやウェアは絶対あかんで！", "choices": [{ "label": "新しい物は使わない", "next": null }] },
+        { "id": "nerve", "emotion": "happy", "text": "前の晩に眠れへんでも大丈夫や。大事なんは2日前の睡眠やって言われとる。緊張しとるんは本気の証拠や。楽しんできぃや！", "choices": [{ "label": "楽しんでくる！", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-marathon", "category": "running", "title": "フルマラソン対策",
+      "nodes": [
+        { "id": "start", "emotion": "thinking", "text": "フルは42.195km、ほんまの勝負は30km過ぎからや。何が心配なん？", "choices": [
+          { "label": "30kmの壁って？", "next": "wall" },
+          { "label": "補給はどうする？", "next": "fuel" },
+          { "label": "直前の練習量は？", "next": "taper" }
+        ] },
+        { "id": "wall", "emotion": "sad", "text": "体のエネルギー源のグリコーゲンが切れてきて、急に脚が止まるんや。前半を抑えることと、レース中の補給。この2つで壁はかなり低くできるで。", "choices": [{ "label": "補給も教えて", "next": "fuel" }] },
+        { "id": "fuel", "emotion": "neutral", "text": "レース3日前から炭水化物多めのカーボローディング。当日は給水所ごとに少しずつ水分、エネルギージェルは30〜45分ごとや。お腹に合うか、練習で必ず試しとくんやで。", "choices": [{ "label": "練習で試しておく", "next": null }] },
+        { "id": "taper", "emotion": "thinking", "text": "レース2〜3週間前から距離を減らす『テーパリング』や。量は減らしても、短いスピード刺激は少し残す。疲れを抜いて、元気満タンでスタートラインに立つんや。", "choices": [{ "label": "テーパリングする", "next": null }] }
+      ]
+    },
+    {
+      "id": "run-mental", "category": "running", "title": "走っている時のメンタル",
+      "nodes": [
+        { "id": "start", "emotion": "thinking", "text": "走っとる途中で心折れそうになる時、あるやろ？", "choices": [
+          { "label": "あと何kmって考えると辛い", "next": "split" },
+          { "label": "周りに抜かれると焦る", "next": "others" }
+        ] },
+        { "id": "split", "emotion": "happy", "text": "ゴールまでを一気に考えたらあかん。『次の電柱まで』『次の給水まで』って小さく区切るんや。気づいたら終わっとる、これがてつや流やで。", "choices": [{ "label": "小さく区切る", "next": null }] },
+        { "id": "others", "emotion": "neutral", "text": "他人は他人や！自分のペースを守った奴が、最後に笑うんやで。後半で抜き返す気持ちよさ、一回味わったらやめられへんで。", "choices": [{ "label": "自分のペースを守る", "next": null }] }
+      ]
+    },
+    {
+      "id": "daily-weekend", "category": "daily", "title": "週末なにしてた？",
+      "nodes": [
+        { "id": "start", "emotion": "happy", "text": "週末どうやった？なんかしたんか？", "choices": [
+          { "label": "家でゴロゴロしてた", "next": "home" },
+          { "label": "出かけてきた！", "next": "out" }
+        ] },
+        { "id": "home", "emotion": "happy", "text": "ええやん、それも大事な時間や。てつやなんか昨日、一日中ドラマ見とったわ。", "choices": [{ "label": "何見てたの？", "next": "drama" }] },
+        { "id": "drama", "emotion": "thinking", "text": "推理もんの一気見や。犯人気になって気づいたら朝やってん…。走るつもりやったのに、アホやろ（笑）", "choices": [{ "label": "あるある（笑）", "next": null }] },
+        { "id": "out", "emotion": "surprised", "text": "お、ええなぁ！どこ行ったんや？今度話聞かせてや。", "choices": [{ "label": "今度写真見せるね", "next": null }] }
+      ]
+    },
+    {
+      "id": "daily-food", "category": "daily", "title": "最近ハマってる食べ物",
+      "nodes": [
+        { "id": "start", "emotion": "happy", "text": "最近ハマっとる食べもんある？てつやは完全にお好み焼きや。", "choices": [
+          { "label": "こだわりある？", "next": "okonomi" },
+          { "label": "私は甘いもの派", "next": "sweet" }
+        ] },
+        { "id": "okonomi", "emotion": "happy", "text": "当たり前やろ！キャベツは粗めで、ひっくり返したら押さえたらあかん。ふわっと焼くんが大阪の心意気や。走った後のお好み焼き、最高やで。", "choices": [{ "label": "食べたくなってきた", "next": null }] },
+        { "id": "sweet", "emotion": "surprised", "text": "甘いもんもええなぁ！ほな今度、走った後にうまいパフェ食べに行こや。ごほうびがあると走るんも楽しなるで。", "choices": [{ "label": "行きたい！", "next": null }] }
+      ]
+    },
+    {
+      "id": "daily-work", "category": "daily", "title": "仕事（学校）が疲れた",
+      "nodes": [
+        { "id": "start", "emotion": "sad", "text": "おつかれさん。今日は大変やったんか？", "choices": [
+          { "label": "忙しすぎた", "next": "busy" },
+          { "label": "人間関係でモヤモヤ", "next": "people" }
+        ] },
+        { "id": "busy", "emotion": "neutral", "text": "よう頑張ったなぁ。今日は走らんでええ。風呂でゆっくりして早よ寝るんや。明日のてつやと自分に任しとき。", "choices": [{ "label": "そうする", "next": null }] },
+        { "id": "people", "emotion": "thinking", "text": "それはしんどいなぁ…。軽う走ると頭がスッキリして、案外どうでもよなるもんやで。話ならいつでも聞いたるからな。", "choices": [{ "label": "聞いてくれてありがとう", "next": null }] }
+      ]
+    },
+    {
+      "id": "daily-travel", "category": "daily", "title": "旅行の話",
+      "nodes": [
+        { "id": "start", "emotion": "happy", "text": "旅行いうたら、この前ニュージーランドの湖行ってきてん。めっちゃきれいやったで！", "choices": [
+          { "label": "写真の帽子、その時の？", "next": "hat" },
+          { "label": "旅先でも走った？", "next": "run" }
+        ] },
+        { "id": "hat", "emotion": "happy", "text": "せや！寒うてニット帽が手放されへんかってん。今やすっかりてつやのトレードマークや。", "choices": [{ "label": "似合ってる！", "next": null }] },
+        { "id": "run", "emotion": "surprised", "text": "当たり前やろ！朝に湖のまわり走ったんやけど、景色よすぎて全然しんどなかったわ。旅ラン、ほんまおすすめやで。", "choices": [{ "label": "旅ランしてみたい", "next": null }] }
+      ]
+    },
+    {
+      "id": "daily-sleep", "category": "daily", "title": "眠れない",
+      "nodes": [
+        { "id": "start", "emotion": "thinking", "text": "眠れへんのか？なんか考えごとか？", "choices": [
+          { "label": "なんとなく目が冴えてる", "next": "awake" },
+          { "label": "明日が不安", "next": "worry" }
+        ] },
+        { "id": "awake", "emotion": "neutral", "text": "スマホ置いて、4秒吸って8秒吐くのを繰り返してみ。あと昼間にちょっと走っとくと、夜はびっくりするくらい寝れるで。", "choices": [{ "label": "スマホ置く…", "next": null }] },
+        { "id": "worry", "emotion": "sad", "text": "不安な夜ってあるよなぁ。けど大丈夫や、明日のことは明日の自分がちゃんとやってくれる。今日はもう休み。", "choices": [{ "label": "少し安心した", "next": null }] }
+      ]
+    },
+    {
+      "id": "daily-music", "category": "daily", "title": "走るときの音楽",
+      "nodes": [
+        { "id": "start", "emotion": "happy", "text": "走る時って音楽聴く派か？", "choices": [
+          { "label": "聴く！", "next": "yes" },
+          { "label": "無音で走る", "next": "no" }
+        ] },
+        { "id": "yes", "emotion": "happy", "text": "てつやもや！BPM170〜180くらいの曲を選ぶと、ピッチが自然に整うんやで。サビで足が勝手に前に出るんがたまらんわ。", "choices": [{ "label": "BPMで選んでみる", "next": null }] },
+        { "id": "no", "emotion": "surprised", "text": "渋いなぁ！自分の呼吸と足音に集中するん、瞑想みたいでええよな。周りの音も聞こえて安全やしな。", "choices": [{ "label": "そうそう", "next": null }] }
+      ]
+    },
+    {
+      "id": "daily-weather", "category": "daily", "title": "今日の天気",
+      "nodes": [
+        { "id": "start", "emotion": "neutral", "text": "今日の天気どないや？", "choices": [
+          { "label": "寒い！", "next": "cold" },
+          { "label": "暑すぎる", "next": "hot" }
+        ] },
+        { "id": "cold", "emotion": "happy", "text": "寒い日はてつやのニット帽の出番や！走り始めの10分さえ我慢したら、体ポッカポカになるで。", "choices": [{ "label": "帽子かぶって走る", "next": null }] },
+        { "id": "hot", "emotion": "sad", "text": "暑い日は無理したらあかんで。走るなら朝早よか夜にして、水はたっぷり持っていきや。", "choices": [{ "label": "水分とる", "next": null }] }
+      ]
+    },
+    {
+      "id": "daily-hobby", "category": "daily", "title": "新しい趣味",
+      "nodes": [
+        { "id": "start", "emotion": "thinking", "text": "ランニング以外で、新しく始めたいことってあるんか？", "choices": [
+          { "label": "写真を撮りたい", "next": "photo" },
+          { "label": "料理してみたい", "next": "cook" }
+        ] },
+        { "id": "photo", "emotion": "happy", "text": "ええやん！走りながら景色撮る『フォトラン』めっちゃ楽しいで。いつもの道がちゃうもんに見えるんや。", "choices": [{ "label": "フォトランやってみる", "next": null }] },
+        { "id": "cook", "emotion": "happy", "text": "料理できる奴はかっこええなぁ。走った後に自分で作った飯、絶対うまいやろ。てつやにも今度食わしてや！", "choices": [{ "label": "まずはカレーから", "next": null }] }
+      ]
+    },
+    {
+      "id": "daily-down", "category": "daily", "title": "ちょっと落ち込んでる",
+      "nodes": [
+        { "id": "start", "emotion": "sad", "text": "どないしたんや、元気ないやんけ。", "choices": [
+          { "label": "うまくいかないことが続いて", "next": "bad" },
+          { "label": "特に理由はないんだけど", "next": "why" }
+        ] },
+        { "id": "bad", "emotion": "sad", "text": "そういう時期もあるわ。けど、こうやって話してくれたんはえらいで。一個ずつでええから、一緒に片付けていこや。", "choices": [{ "label": "ありがとう", "next": "bad2" }] },
+        { "id": "bad2", "emotion": "happy", "text": "おう。てつやはいつでもここおるから、また話しに来いや。", "choices": [{ "label": "また来るね", "next": null }] },
+        { "id": "why", "emotion": "neutral", "text": "理由のない落ち込みもあるわな。そんな日は外の空気吸うだけでもちゃうで。散歩でええから、ちょっと出てみ。", "choices": [{ "label": "少し歩いてみる", "next": null }] }
+      ]
+    },
+    {
+      "id": "daily-memory", "category": "daily", "title": "昔の話",
+      "nodes": [
+        { "id": "start", "emotion": "happy", "text": "なぁ、学生の頃って運動得意やったんか？", "choices": [
+          { "label": "全然ダメだった", "next": "bad" },
+          { "label": "けっこう得意だった", "next": "good" }
+        ] },
+        { "id": "bad", "emotion": "happy", "text": "てつやもマラソン大会はビリの方やったで（笑）。大人になってからの方が、走るんがおもろなったわ。", "choices": [{ "label": "てつやもそうなんだ", "next": null }] },
+        { "id": "good", "emotion": "surprised", "text": "ほんまか、うらやましいわ！ほな今度、昔の勘取り戻しに一緒に走ろや。負けへんで！", "choices": [{ "label": "負けないよ", "next": null }] }
+      ]
+    },
+    {
+      "id": "love-crush", "category": "love", "title": "気になる人がいる",
+      "nodes": [
+        { "id": "start", "emotion": "surprised", "text": "なんやて！？気になる人おるんか！どんな人や？", "choices": [
+          { "label": "職場の人", "next": "work" },
+          { "label": "友達の友達", "next": "friend" }
+        ] },
+        { "id": "work", "emotion": "thinking", "text": "職場かぁ、毎日会えるんはええな。まずは挨拶に一言足すとこからや。『今日寒いですね』とかでええねん。", "choices": [{ "label": "一言足してみる", "next": null }] },
+        { "id": "friend", "emotion": "happy", "text": "ほな、みんなで遊ぶ機会作るんが自然やな。バーベキューとか、みんなでランニングとか（笑）。てつやも協力したるで！", "choices": [{ "label": "企画してみようかな", "next": null }] }
+      ]
+    },
+    {
+      "id": "love-date", "category": "love", "title": "デートどこ行く？",
+      "nodes": [
+        { "id": "start", "emotion": "happy", "text": "デートの場所で悩んどるんか？", "choices": [
+          { "label": "初デートなんだ", "next": "first" },
+          { "label": "マンネリ気味で…", "next": "rut" }
+        ] },
+        { "id": "first", "emotion": "thinking", "text": "初デートやったら、カフェとか水族館みたいに話のネタがある場所がええで。長すぎへん2〜3時間がちょうどええねん。", "choices": [{ "label": "水族館いいかも", "next": null }] },
+        { "id": "rut", "emotion": "happy", "text": "いつもとちゃうことしよや！朝に一緒に走って、そのあとモーニング。絶対新鮮やで。", "choices": [{ "label": "朝活デートいいね", "next": null }] }
+      ]
+    },
+    {
+      "id": "love-type", "category": "love", "title": "好きなタイプ",
+      "nodes": [
+        { "id": "start", "emotion": "thinking", "text": "好きなタイプ？てつやは…一緒におって笑える人やな。自分は？", "choices": [
+          { "label": "優しい人", "next": "kind" },
+          { "label": "目標に向かって頑張る人", "next": "effort" }
+        ] },
+        { "id": "kind", "emotion": "happy", "text": "わかるわ。優しさって小さいとこに出るもんな。店員さんへの態度とかな。", "choices": [{ "label": "それ大事", "next": null }] },
+        { "id": "effort", "emotion": "happy", "text": "ええやん！ほな自分も頑張っとったら、自然と似た人が寄ってくるで。ランニングもその一つや。", "choices": [{ "label": "もっと走ろう", "next": null }] }
+      ]
+    },
+    {
+      "id": "love-confess", "category": "love", "title": "告白ってどうする？",
+      "nodes": [
+        { "id": "start", "emotion": "surprised", "text": "告白やて！？ついにその時が来たんか…！", "choices": [
+          { "label": "タイミングがわからない", "next": "timing" },
+          { "label": "フラれるのが怖い", "next": "fear" }
+        ] },
+        { "id": "timing", "emotion": "thinking", "text": "二人で何回か出かけて、向こうも楽しそうにしとったら、それがサインや。帰り道とかが自然でええんちゃうか。", "choices": [{ "label": "帰り道か…", "next": null }] },
+        { "id": "fear", "emotion": "neutral", "text": "怖いんは本気やからや。けど、気持ち伝えられる奴はほんまにかっこええで。どんな結果でも、てつやは応援しとる。", "choices": [{ "label": "勇気出してみる", "next": null }] }
+      ]
+    },
+    {
+      "id": "love-reply", "category": "love", "title": "LINEの返信が遅い",
+      "nodes": [
+        { "id": "start", "emotion": "thinking", "text": "返信遅いと気になるよなぁ。どれくらい待っとるんや？", "choices": [
+          { "label": "半日くらい", "next": "half" },
+          { "label": "もう3日…", "next": "days" }
+        ] },
+        { "id": "half", "emotion": "happy", "text": "半日なんか全然ふつうや！忙しいだけやって。その間に走ってき。帰ってきたら返事来とるで。", "choices": [{ "label": "走って待つ！", "next": null }] },
+        { "id": "days", "emotion": "sad", "text": "それはちょっと気になるなぁ…。追いLINEはせんと、いっぺん自分の時間に集中しよ。自分の価値は返信の速さで決まるもんちゃうで。", "choices": [{ "label": "自分の時間、大事にする", "next": null }] }
+      ]
+    },
+    {
+      "id": "love-heartbreak", "category": "love", "title": "失恋した",
+      "nodes": [
+        { "id": "start", "emotion": "sad", "text": "…そうか。しんどかったなぁ。", "choices": [
+          { "label": "まだ引きずってる", "next": "still" },
+          { "label": "もう前を向きたい", "next": "forward" }
+        ] },
+        { "id": "still", "emotion": "sad", "text": "引きずるんは、それだけ大事やったってことや。無理に忘れんでええ。時間が少しずつ軽うしてくれるからな。", "choices": [{ "label": "ありがとう", "next": null }] },
+        { "id": "forward", "emotion": "happy", "text": "強いなぁ！よっしゃ、次のレースにエントリーしよや！目標があったら、毎日がちょっと明るなるで。", "choices": [{ "label": "よし、走る！", "next": null }] }
+      ]
+    },
+    {
+      "id": "love-tetsuya", "category": "love", "title": "てつやの恋バナ",
+      "nodes": [
+        { "id": "start", "emotion": "surprised", "text": "な、なんやねん急に！てつやの恋バナ聞くんか！？", "choices": [
+          { "label": "聞きたい！", "next": "tell" },
+          { "label": "今、好きな人いる？", "next": "now" }
+        ] },
+        { "id": "tell", "emotion": "happy", "text": "昔な、好きな子に誘われてマラソン大会出たんが、走り始めたきっかけやねん。結局フラれたけど、ランニングだけは残ったわ（笑）", "choices": [{ "label": "いい話じゃん", "next": null }] },
+        { "id": "now", "emotion": "thinking", "text": "う、うるさいわ！…内緒や。けど、一緒に走ってくれる人がおったら最高やなって思とる。", "choices": [{ "label": "気になる（笑）", "next": null }] }
+      ]
+    },
+    {
+      "id": "love-rundate", "category": "love", "title": "一緒に走るデート",
+      "nodes": [
+        { "id": "start", "emotion": "happy", "text": "ランニングデートって、実はめっちゃええんやで。", "choices": [
+          { "label": "相手が走らない人だったら？", "next": "nonrunner" },
+          { "label": "どこを走るのがいい？", "next": "where" }
+        ] },
+        { "id": "nonrunner", "emotion": "neutral", "text": "その時は『歩いてカフェまで』からでええねん。相手のペースに合わせられる奴は、絶対モテるで。", "choices": [{ "label": "相手に合わせる", "next": null }] },
+        { "id": "where", "emotion": "happy", "text": "海沿いとか川沿いがおすすめや！景色ええと話も弾むし、最後に夕日なんか見えたら完璧やろ。", "choices": [{ "label": "夕日ラン、いいね", "next": null }] }
+      ]
+    }
+  ]
+}

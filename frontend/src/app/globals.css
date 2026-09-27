@@ -12,7 +12,7 @@ body {
   font-family: var(--font-sans);
 }
 
-/* Film-like grain and lens vignette laid over the live portrait. */
+/* Film-like grain and lens vignette laid over the live video. */
 .video-grain {
   position: absolute;
   inset: -50%;

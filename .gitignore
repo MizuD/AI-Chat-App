@@ -21,3 +21,6 @@ backend/*.egg-info/
 
 # Claude Code (個人環境のローカル設定)
 .claude/settings.local.json
+
+# SQLite database (rebuilt by backend/seed.py)
+backend/data/*.db

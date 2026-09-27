@@ -1,5 +1,5 @@
-import { CallExperience } from "@/components/call/CallExperience";
+import { GameScreen } from "@/components/game/GameScreen";
 
 export default function Home() {
-  return <CallExperience />;
+  return <GameScreen />;
 }

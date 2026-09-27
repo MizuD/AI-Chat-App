@@ -15,8 +15,8 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "KOKORO — Video Chat",
-  description: "写真の相手とビデオ通話のように話せるチャットアプリ",
+  title: "てつやと話そう — KOKORO",
+  description: "ランニング仲間のてつやと、選択肢で会話するチャットアプリ",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -52,6 +52,24 @@ DATABASE_URL=postgresql://postgres:[YOUR-PASSWORD]@db.[PROJECT-REF].supabase.co:
 - 常時起動するバックエンド(FastAPI)からの接続なので、Direct connection形式を使用
 - パスワードに記号(`&`, `#`など)が含まれる場合はURLエンコードが必要
 
+## ローカルでの起動
+
+会話データは `backend/data/dialogues.json`（原稿）から SQLite（`backend/data/app.db`、git管理外）を作って使う。
+
+```bash
+# バックエンド（FastAPI）
+cd backend
+source .venv/bin/activate
+python seed.py                 # 原稿を編集したら再実行（選択履歴は残る）
+uvicorn main:app --port 8000
+
+# フロントエンド（別ターミナル）
+cd frontend
+npm run dev                    # /api/* は FastAPI(127.0.0.1:8000) に中継される
+```
+
+- キャラクターの3Dモデルは Blender で作成（元データ: `assets/blender/friend.blend`）し、`frontend/public/models/friend.glb` に書き出して使う
+
 ## 開発フロー(日常運用)
 
 1. コードを編集
